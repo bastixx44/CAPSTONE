@@ -1,2 +1,7 @@
-# CAPSTONE
-En este git se encuentra toda la documentación necesaria para dar a conocer la planificación y desarrollo de nuestro proyecto sobre el centro de acondicionamiento físico (CAF) del Duoc UC 
+# CAF3
+
+A new Flutter project.
+
+## Getting Started
+
+FlutterFlow projects are built to run on the Flutter _stable_ release.
