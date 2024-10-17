@@ -80,13 +80,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? NavBarPage() : LoginWidget(),
+          appStateNotifier.loggedIn ? NavBarPage() : WelcomeWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? NavBarPage() : LoginWidget(),
+              appStateNotifier.loggedIn ? NavBarPage() : WelcomeWidget(),
         ),
         FFRoute(
           name: 'home',
@@ -100,11 +100,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => WelcomeWidget(),
         ),
         FFRoute(
-          name: 'onboarding',
-          path: '/onboarding',
-          builder: (context, params) => OnboardingWidget(),
-        ),
-        FFRoute(
           name: 'register',
           path: '/register',
           builder: (context, params) => RegisterWidget(),
@@ -113,11 +108,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'completeProfile',
           path: '/completeProfile',
           builder: (context, params) => CompleteProfileWidget(),
-        ),
-        FFRoute(
-          name: 'goals',
-          path: '/goals',
-          builder: (context, params) => GoalsWidget(),
         ),
         FFRoute(
           name: 'login',
@@ -130,23 +120,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => RegistrationSuccessWidget(),
         ),
         FFRoute(
-          name: 'profile',
-          path: '/profile',
+          name: 'agendar',
+          path: '/agendar',
           builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'profile')
-              : ProfileWidget(),
-        ),
-        FFRoute(
-          name: 'progressTracker',
-          path: '/progressTracker',
-          builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'progressTracker')
-              : ProgressTrackerWidget(),
-        ),
-        FFRoute(
-          name: 'CrearReserva',
-          path: '/crearReserva',
-          builder: (context, params) => CrearReservaWidget(),
+              ? NavBarPage(initialPage: 'agendar')
+              : AgendarWidget(),
         ),
         FFRoute(
           name: 'RutinaPierna',
@@ -157,6 +135,33 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'RutinasGeneral',
           path: '/rutinasGeneral',
           builder: (context, params) => RutinasGeneralWidget(),
+        ),
+        FFRoute(
+          name: 'RutinaFullBody',
+          path: '/rutinaFullBody',
+          builder: (context, params) => RutinaFullBodyWidget(),
+        ),
+        FFRoute(
+          name: 'RutinaPectoral',
+          path: '/RutinaPectoral',
+          builder: (context, params) => RutinaPectoralWidget(),
+        ),
+        FFRoute(
+          name: 'RutinaEspalda',
+          path: '/RutinaEspalda',
+          builder: (context, params) => RutinaEspaldaWidget(),
+        ),
+        FFRoute(
+          name: 'perfilUsuario',
+          path: '/perfilUsuario',
+          builder: (context, params) => params.isEmpty
+              ? NavBarPage(initialPage: 'perfilUsuario')
+              : PerfilUsuarioWidget(),
+        ),
+        FFRoute(
+          name: 'homeCopy',
+          path: '/homeCopy',
+          builder: (context, params) => HomeCopyWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -327,7 +332,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
-            return '/login';
+            return '/welcome';
           }
           return null;
         },

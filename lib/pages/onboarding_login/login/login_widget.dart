@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/components/primary_button/primary_button_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -26,11 +27,11 @@ class _LoginWidgetState extends State<LoginWidget> {
     super.initState();
     _model = createModel(context, () => LoginModel());
 
-    _model.textController1 ??= TextEditingController();
-    _model.textFieldFocusNode1 ??= FocusNode();
+    _model.emailTextController ??= TextEditingController();
+    _model.emailFocusNode ??= FocusNode();
 
-    _model.textController2 ??= TextEditingController();
-    _model.textFieldFocusNode2 ??= FocusNode();
+    _model.passwordTextController ??= TextEditingController();
+    _model.passwordFocusNode ??= FocusNode();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -93,12 +94,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
                       child: TextFormField(
-                        controller: _model.textController1,
-                        focusNode: _model.textFieldFocusNode1,
+                        controller: _model.emailTextController,
+                        focusNode: _model.emailFocusNode,
                         autofocus: true,
                         obscureText: false,
                         decoration: InputDecoration(
-                          hintText: 'Correo institucional @duocuc.cl',
+                          hintText: 'Correo_institucional@duocuc.cl',
                           hintStyle:
                               FlutterFlowTheme.of(context).bodySmall.override(
                                     fontFamily: 'Poppins',
@@ -148,7 +149,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                               color: FlutterFlowTheme.of(context).secondaryText,
                               letterSpacing: 0.0,
                             ),
-                        validator: _model.textController1Validator
+                        validator: _model.emailTextControllerValidator
                             .asValidator(context),
                       ),
                     ),
@@ -156,8 +157,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
                       child: TextFormField(
-                        controller: _model.textController2,
-                        focusNode: _model.textFieldFocusNode2,
+                        controller: _model.passwordTextController,
+                        focusNode: _model.passwordFocusNode,
                         autofocus: true,
                         obscureText: !_model.passwordVisibility,
                         decoration: InputDecoration(
@@ -225,7 +226,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                               color: FlutterFlowTheme.of(context).secondaryText,
                               letterSpacing: 0.0,
                             ),
-                        validator: _model.textController2Validator
+                        validator: _model.passwordTextControllerValidator
                             .asValidator(context),
                       ),
                     ),
@@ -274,16 +275,18 @@ class _LoginWidgetState extends State<LoginWidget> {
                         hoverColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         onTap: () async {
-                          context.goNamed(
-                            'home',
-                            extra: <String, dynamic>{
-                              kTransitionInfoKey: TransitionInfo(
-                                hasTransition: true,
-                                transitionType: PageTransitionType.rightToLeft,
-                                duration: Duration(milliseconds: 400),
-                              ),
-                            },
+                          GoRouter.of(context).prepareAuthEvent();
+
+                          final user = await authManager.signInWithEmail(
+                            context,
+                            _model.emailTextController.text,
+                            _model.passwordTextController.text,
                           );
+                          if (user == null) {
+                            return;
+                          }
+
+                          context.goNamedAuth('home', context.mounted);
                         },
                         child: wrapWithModel(
                           model: _model.primaryButtonModel,
@@ -340,55 +343,96 @@ class _LoginWidgetState extends State<LoginWidget> {
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   8.0, 0.0, 8.0, 0.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(26.0),
-                                  border: Border.all(
-                                    color: FlutterFlowTheme.of(context).accent2,
-                                    width: 0.8,
-                                  ),
-                                ),
-                                alignment: AlignmentDirectional(0.0, 0.0),
-                                child: Align(
-                                  alignment: AlignmentDirectional(0.0, 0.0),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(26.0),
-                                    child: Image.asset(
-                                      'assets/images/googleIcon.png',
-                                      width: 24.0,
-                                      fit: BoxFit.cover,
+                              child: InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  GoRouter.of(context).prepareAuthEvent();
+                                  final user = await authManager
+                                      .signInWithGoogle(context);
+                                  if (user == null) {
+                                    return;
+                                  }
+
+                                  context.goNamedAuth('home', context.mounted);
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(26.0),
+                                    border: Border.all(
+                                      color:
+                                          FlutterFlowTheme.of(context).accent2,
+                                      width: 0.8,
                                     ),
                                   ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  8.0, 0.0, 8.0, 0.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(26.0),
-                                  border: Border.all(
-                                    color: FlutterFlowTheme.of(context).accent2,
-                                    width: 0.8,
-                                  ),
-                                ),
-                                alignment: AlignmentDirectional(0.0, 0.0),
-                                child: Align(
                                   alignment: AlignmentDirectional(0.0, 0.0),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        32.0, 26.0, 32.0, 26.0),
-                                    child: Image.asset(
-                                      'assets/images/facebookIcon.png',
-                                      height: 24.0,
-                                      fit: BoxFit.cover,
+                                  child: Align(
+                                    alignment: AlignmentDirectional(0.0, 0.0),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(26.0),
+                                      child: Image.asset(
+                                        'assets/images/googleIcon.png',
+                                        width: 24.0,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
                           ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        '¿No tienes una cuenta?',
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Poppins',
+                              letterSpacing: 0.0,
+                              lineHeight: 1.5,
+                            ),
+                      ),
+                      Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 0.0, 0.0),
+                        child: InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            context.pushNamed(
+                              'register',
+                              extra: <String, dynamic>{
+                                kTransitionInfoKey: TransitionInfo(
+                                  hasTransition: true,
+                                  transitionType: PageTransitionType.fade,
+                                  duration: Duration(milliseconds: 0),
+                                ),
+                              },
+                            );
+                          },
+                          child: Text(
+                            'Registrarse',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Poppins',
+                                  color: FlutterFlowTheme.of(context).secondary,
+                                  letterSpacing: 0.0,
+                                  lineHeight: 1.5,
+                                ),
+                          ),
                         ),
                       ),
                     ],

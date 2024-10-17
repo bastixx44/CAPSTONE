@@ -1,4 +1,4 @@
-import '/components/action_widget.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -15,18 +15,9 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 
 class HomeModel extends FlutterFlowModel<HomeWidget> {
-  ///  State fields for stateful widgets in this page.
-
-  // Model for Action component.
-  late ActionModel actionModel;
+  @override
+  void initState(BuildContext context) {}
 
   @override
-  void initState(BuildContext context) {
-    actionModel = createModel(context, () => ActionModel());
-  }
-
-  @override
-  void dispose() {
-    actionModel.dispose();
-  }
+  void dispose() {}
 }

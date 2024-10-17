@@ -1,4 +1,4 @@
-import '/components/action_widget.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -34,6 +34,22 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
     super.initState();
     _model = createModel(context, () => HomeModel());
 
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (valueOrDefault<bool>(currentUserDocument?.isAdmin, false)) {
+        context.pushNamed(
+          'homeCopy',
+          extra: <String, dynamic>{
+            kTransitionInfoKey: TransitionInfo(
+              hasTransition: true,
+              transitionType: PageTransitionType.fade,
+              duration: Duration(milliseconds: 0),
+            ),
+          },
+        );
+      }
+    });
+
     animationsMap.addAll({
       'rowOnPageLoadAnimation': AnimationInfo(
         trigger: AnimationTrigger.onPageLoad,
@@ -54,19 +70,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
           MoveEffect(
             curve: Curves.easeOut,
             delay: 0.0.ms,
-            duration: 600.0.ms,
-            begin: Offset(0.0, 40.0),
-            end: Offset(0.0, 0.0),
-          ),
-        ],
-      ),
-      'actionOnPageLoadAnimation': AnimationInfo(
-        trigger: AnimationTrigger.onPageLoad,
-        effectsBuilder: () => [
-          VisibilityEffect(duration: 200.ms),
-          MoveEffect(
-            curve: Curves.easeOut,
-            delay: 200.0.ms,
             duration: 600.0.ms,
             begin: Offset(0.0, 40.0),
             end: Offset(0.0, 0.0),
@@ -137,17 +140,19 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                     lineHeight: 1.5,
                                   ),
                             ),
-                            Text(
-                              'Matias',
-                              style: FlutterFlowTheme.of(context)
-                                  .titleLarge
-                                  .override(
-                                    fontFamily: 'Poppins',
-                                    fontSize: 20.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.bold,
-                                    lineHeight: 1.5,
-                                  ),
+                            AuthUserStreamWidget(
+                              builder: (context) => Text(
+                                currentUserDisplayName,
+                                style: FlutterFlowTheme.of(context)
+                                    .titleLarge
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      fontSize: 20.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.bold,
+                                      lineHeight: 1.5,
+                                    ),
+                              ),
                             ),
                           ],
                         ),
@@ -185,7 +190,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                 ),
                 Padding(
                   padding:
-                      EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 20.0, 0.0),
+                      EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 20.0, 20.0),
                   child: Container(
                     width: MediaQuery.sizeOf(context).width * 1.0,
                     decoration: BoxDecoration(
@@ -301,58 +306,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                 ),
                 Padding(
                   padding:
-                      EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 10.0),
-                  child: wrapWithModel(
-                    model: _model.actionModel,
-                    updateCallback: () => safeSetState(() {}),
-                    child: ActionWidget(
-                      button: 'Check',
-                    ),
-                  ).animateOnPageLoad(
-                      animationsMap['actionOnPageLoadAnimation']!),
-                ),
-                Container(
-                  width: 361.0,
-                  height: 100.0,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                  ),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Text(
-                          'NOTIFICACIONES CAF',
-                          style: FlutterFlowTheme.of(context)
-                              .headlineSmall
-                              .override(
-                                fontFamily: 'Poppins',
-                                letterSpacing: 0.0,
-                              ),
-                        ),
-                        Text(
-                          'Nuevo equipo de cardio disponible en el gimnasio. ¡Ven a probarlo!',
-                          textAlign: TextAlign.center,
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Poppins',
-                                    letterSpacing: 0.0,
-                                  ),
-                        ),
-                        Text(
-                          'ÚLTIMO CUPO PARA LAS 13:00',
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Poppins',
-                                    letterSpacing: 0.0,
-                                  ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding:
                       EdgeInsetsDirectional.fromSTEB(20.0, 30.0, 20.0, 0.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
@@ -362,7 +315,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Últimos entrenamientos',
+                            'Rutinas de entrenamientos',
                             style: FlutterFlowTheme.of(context)
                                 .titleMedium
                                 .override(

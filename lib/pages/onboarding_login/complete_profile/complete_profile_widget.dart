@@ -456,7 +456,7 @@ class _CompleteProfileWidgetState extends State<CompleteProfileWidget> {
                           highlightColor: Colors.transparent,
                           onTap: () async {
                             context.pushNamed(
-                              'goals',
+                              'home',
                               extra: <String, dynamic>{
                                 kTransitionInfoKey: TransitionInfo(
                                   hasTransition: true,

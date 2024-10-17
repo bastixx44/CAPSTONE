@@ -122,8 +122,8 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                           hoverColor: Colors.transparent,
                           highlightColor: Colors.transparent,
                           onTap: () async {
-                            context.goNamed(
-                              'onboarding',
+                            context.pushNamed(
+                              'register',
                               extra: <String, dynamic>{
                                 kTransitionInfoKey: TransitionInfo(
                                   hasTransition: true,

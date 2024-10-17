@@ -1,3 +1,5 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/components/primary_button/primary_button_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -11,25 +13,23 @@ import 'package:provider/provider.dart';
 class RegisterModel extends FlutterFlowModel<RegisterWidget> {
   ///  State fields for stateful widgets in this page.
 
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode1;
-  TextEditingController? textController1;
-  String? Function(BuildContext, String?)? textController1Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode2;
-  TextEditingController? textController2;
-  String? Function(BuildContext, String?)? textController2Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode3;
-  TextEditingController? textController3;
-  String? Function(BuildContext, String?)? textController3Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode4;
-  TextEditingController? textController4;
+  // State field(s) for Nombre widget.
+  FocusNode? nombreFocusNode;
+  TextEditingController? nombreTextController;
+  String? Function(BuildContext, String?)? nombreTextControllerValidator;
+  // State field(s) for Apellido widget.
+  FocusNode? apellidoFocusNode;
+  TextEditingController? apellidoTextController;
+  String? Function(BuildContext, String?)? apellidoTextControllerValidator;
+  // State field(s) for Email widget.
+  FocusNode? emailFocusNode;
+  TextEditingController? emailTextController;
+  String? Function(BuildContext, String?)? emailTextControllerValidator;
+  // State field(s) for Password widget.
+  FocusNode? passwordFocusNode;
+  TextEditingController? passwordTextController;
   late bool passwordVisibility;
-  String? Function(BuildContext, String?)? textController4Validator;
-  // State field(s) for Checkbox widget.
-  bool? checkboxValue;
+  String? Function(BuildContext, String?)? passwordTextControllerValidator;
   // Model for primaryButton component.
   late PrimaryButtonModel primaryButtonModel;
 
@@ -41,17 +41,17 @@ class RegisterModel extends FlutterFlowModel<RegisterWidget> {
 
   @override
   void dispose() {
-    textFieldFocusNode1?.dispose();
-    textController1?.dispose();
+    nombreFocusNode?.dispose();
+    nombreTextController?.dispose();
 
-    textFieldFocusNode2?.dispose();
-    textController2?.dispose();
+    apellidoFocusNode?.dispose();
+    apellidoTextController?.dispose();
 
-    textFieldFocusNode3?.dispose();
-    textController3?.dispose();
+    emailFocusNode?.dispose();
+    emailTextController?.dispose();
 
-    textFieldFocusNode4?.dispose();
-    textController4?.dispose();
+    passwordFocusNode?.dispose();
+    passwordTextController?.dispose();
 
     primaryButtonModel.dispose();
   }

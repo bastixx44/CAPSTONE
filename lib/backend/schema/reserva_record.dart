@@ -21,32 +21,26 @@ class ReservaRecord extends FirestoreRecord {
   DateTime? get fechaReserva => _fechaReserva;
   bool hasFechaReserva() => _fechaReserva != null;
 
-  // "duracion_reserva" field.
-  int? _duracionReserva;
-  int get duracionReserva => _duracionReserva ?? 0;
-  bool hasDuracionReserva() => _duracionReserva != null;
+  // "hora_reserva" field.
+  DateTime? _horaReserva;
+  DateTime? get horaReserva => _horaReserva;
+  bool hasHoraReserva() => _horaReserva != null;
 
-  // "cupo_max" field.
-  int? _cupoMax;
-  int get cupoMax => _cupoMax ?? 0;
-  bool hasCupoMax() => _cupoMax != null;
+  // "cupo_maximo" field.
+  int? _cupoMaximo;
+  int get cupoMaximo => _cupoMaximo ?? 0;
+  bool hasCupoMaximo() => _cupoMaximo != null;
 
-  // "cupo_actual" field.
-  int? _cupoActual;
-  int get cupoActual => _cupoActual ?? 0;
-  bool hasCupoActual() => _cupoActual != null;
-
-  // "estado_reserva" field.
-  String? _estadoReserva;
-  String get estadoReserva => _estadoReserva ?? '';
-  bool hasEstadoReserva() => _estadoReserva != null;
+  // "usuariosInscritos" field.
+  List<int>? _usuariosInscritos;
+  List<int> get usuariosInscritos => _usuariosInscritos ?? const [];
+  bool hasUsuariosInscritos() => _usuariosInscritos != null;
 
   void _initializeFields() {
     _fechaReserva = snapshotData['fecha_reserva'] as DateTime?;
-    _duracionReserva = castToType<int>(snapshotData['duracion_reserva']);
-    _cupoMax = castToType<int>(snapshotData['cupo_max']);
-    _cupoActual = castToType<int>(snapshotData['cupo_actual']);
-    _estadoReserva = snapshotData['estado_reserva'] as String?;
+    _horaReserva = snapshotData['hora_reserva'] as DateTime?;
+    _cupoMaximo = castToType<int>(snapshotData['cupo_maximo']);
+    _usuariosInscritos = getDataList(snapshotData['usuariosInscritos']);
   }
 
   static CollectionReference get collection =>
@@ -85,18 +79,14 @@ class ReservaRecord extends FirestoreRecord {
 
 Map<String, dynamic> createReservaRecordData({
   DateTime? fechaReserva,
-  int? duracionReserva,
-  int? cupoMax,
-  int? cupoActual,
-  String? estadoReserva,
+  DateTime? horaReserva,
+  int? cupoMaximo,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'fecha_reserva': fechaReserva,
-      'duracion_reserva': duracionReserva,
-      'cupo_max': cupoMax,
-      'cupo_actual': cupoActual,
-      'estado_reserva': estadoReserva,
+      'hora_reserva': horaReserva,
+      'cupo_maximo': cupoMaximo,
     }.withoutNulls,
   );
 
@@ -108,21 +98,16 @@ class ReservaRecordDocumentEquality implements Equality<ReservaRecord> {
 
   @override
   bool equals(ReservaRecord? e1, ReservaRecord? e2) {
+    const listEquality = ListEquality();
     return e1?.fechaReserva == e2?.fechaReserva &&
-        e1?.duracionReserva == e2?.duracionReserva &&
-        e1?.cupoMax == e2?.cupoMax &&
-        e1?.cupoActual == e2?.cupoActual &&
-        e1?.estadoReserva == e2?.estadoReserva;
+        e1?.horaReserva == e2?.horaReserva &&
+        e1?.cupoMaximo == e2?.cupoMaximo &&
+        listEquality.equals(e1?.usuariosInscritos, e2?.usuariosInscritos);
   }
 
   @override
-  int hash(ReservaRecord? e) => const ListEquality().hash([
-        e?.fechaReserva,
-        e?.duracionReserva,
-        e?.cupoMax,
-        e?.cupoActual,
-        e?.estadoReserva
-      ]);
+  int hash(ReservaRecord? e) => const ListEquality().hash(
+      [e?.fechaReserva, e?.horaReserva, e?.cupoMaximo, e?.usuariosInscritos]);
 
   @override
   bool isValidKey(Object? o) => o is ReservaRecord;

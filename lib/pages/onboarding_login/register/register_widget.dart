@@ -1,3 +1,5 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/components/primary_button/primary_button_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -26,17 +28,17 @@ class _RegisterWidgetState extends State<RegisterWidget> {
     super.initState();
     _model = createModel(context, () => RegisterModel());
 
-    _model.textController1 ??= TextEditingController();
-    _model.textFieldFocusNode1 ??= FocusNode();
+    _model.nombreTextController ??= TextEditingController();
+    _model.nombreFocusNode ??= FocusNode();
 
-    _model.textController2 ??= TextEditingController();
-    _model.textFieldFocusNode2 ??= FocusNode();
+    _model.apellidoTextController ??= TextEditingController();
+    _model.apellidoFocusNode ??= FocusNode();
 
-    _model.textController3 ??= TextEditingController();
-    _model.textFieldFocusNode3 ??= FocusNode();
+    _model.emailTextController ??= TextEditingController();
+    _model.emailFocusNode ??= FocusNode();
 
-    _model.textController4 ??= TextEditingController();
-    _model.textFieldFocusNode4 ??= FocusNode();
+    _model.passwordTextController ??= TextEditingController();
+    _model.passwordFocusNode ??= FocusNode();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -69,7 +71,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Text(
-                        'Hey there,',
+                        'Bienvenido,',
                         style: FlutterFlowTheme.of(context).bodyLarge.override(
                               fontFamily: 'Poppins',
                               color: FlutterFlowTheme.of(context).secondaryText,
@@ -78,7 +80,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                             ),
                       ),
                       Text(
-                        'Create an account',
+                        'Crea una cuenta',
                         style: FlutterFlowTheme.of(context).titleLarge.override(
                               fontFamily: 'Poppins',
                               fontSize: 20.0,
@@ -99,12 +101,12 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
                       child: TextFormField(
-                        controller: _model.textController1,
-                        focusNode: _model.textFieldFocusNode1,
+                        controller: _model.nombreTextController,
+                        focusNode: _model.nombreFocusNode,
                         autofocus: true,
                         obscureText: false,
                         decoration: InputDecoration(
-                          hintText: 'First Name',
+                          hintText: 'Nombre',
                           hintStyle:
                               FlutterFlowTheme.of(context).bodySmall.override(
                                     fontFamily: 'Poppins',
@@ -154,7 +156,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                               color: FlutterFlowTheme.of(context).secondaryText,
                               letterSpacing: 0.0,
                             ),
-                        validator: _model.textController1Validator
+                        validator: _model.nombreTextControllerValidator
                             .asValidator(context),
                       ),
                     ),
@@ -162,12 +164,12 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
                       child: TextFormField(
-                        controller: _model.textController2,
-                        focusNode: _model.textFieldFocusNode2,
+                        controller: _model.apellidoTextController,
+                        focusNode: _model.apellidoFocusNode,
                         autofocus: true,
                         obscureText: false,
                         decoration: InputDecoration(
-                          hintText: 'Last Name',
+                          hintText: 'Apellido',
                           hintStyle:
                               FlutterFlowTheme.of(context).bodySmall.override(
                                     fontFamily: 'Poppins',
@@ -217,7 +219,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                               color: FlutterFlowTheme.of(context).secondaryText,
                               letterSpacing: 0.0,
                             ),
-                        validator: _model.textController2Validator
+                        validator: _model.apellidoTextControllerValidator
                             .asValidator(context),
                       ),
                     ),
@@ -225,12 +227,12 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
                       child: TextFormField(
-                        controller: _model.textController3,
-                        focusNode: _model.textFieldFocusNode3,
+                        controller: _model.emailTextController,
+                        focusNode: _model.emailFocusNode,
                         autofocus: true,
                         obscureText: false,
                         decoration: InputDecoration(
-                          hintText: 'Email',
+                          hintText: 'Correo_institucional@duocuc.cl',
                           hintStyle:
                               FlutterFlowTheme.of(context).bodySmall.override(
                                     fontFamily: 'Poppins',
@@ -280,7 +282,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                               color: FlutterFlowTheme.of(context).secondaryText,
                               letterSpacing: 0.0,
                             ),
-                        validator: _model.textController3Validator
+                        validator: _model.emailTextControllerValidator
                             .asValidator(context),
                       ),
                     ),
@@ -288,12 +290,12 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
                       child: TextFormField(
-                        controller: _model.textController4,
-                        focusNode: _model.textFieldFocusNode4,
+                        controller: _model.passwordTextController,
+                        focusNode: _model.passwordFocusNode,
                         autofocus: true,
                         obscureText: !_model.passwordVisibility,
                         decoration: InputDecoration(
-                          hintText: 'Password',
+                          hintText: 'Contraseña',
                           hintStyle:
                               FlutterFlowTheme.of(context).bodySmall.override(
                                     fontFamily: 'Poppins',
@@ -357,68 +359,9 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                               color: FlutterFlowTheme.of(context).secondaryText,
                               letterSpacing: 0.0,
                             ),
-                        validator: _model.textController4Validator
+                        validator: _model.passwordTextControllerValidator
                             .asValidator(context),
                       ),
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Theme(
-                          data: ThemeData(
-                            checkboxTheme: CheckboxThemeData(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(3.0),
-                              ),
-                            ),
-                            unselectedWidgetColor:
-                                FlutterFlowTheme.of(context).accent2,
-                          ),
-                          child: Checkbox(
-                            value: _model.checkboxValue ??= false,
-                            onChanged: (newValue) async {
-                              safeSetState(
-                                  () => _model.checkboxValue = newValue!);
-                            },
-                            side: BorderSide(
-                              width: 2,
-                              color: FlutterFlowTheme.of(context).accent2,
-                            ),
-                            activeColor: FlutterFlowTheme.of(context).primary,
-                          ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 32.0, 0.0),
-                            child: Wrap(
-                              spacing: 0.0,
-                              runSpacing: 0.0,
-                              alignment: WrapAlignment.start,
-                              crossAxisAlignment: WrapCrossAlignment.start,
-                              direction: Axis.horizontal,
-                              runAlignment: WrapAlignment.start,
-                              verticalDirection: VerticalDirection.down,
-                              clipBehavior: Clip.none,
-                              children: [
-                                Text(
-                                  'By continuing you accept our Privacy Policy and Term of Use.',
-                                  style: FlutterFlowTheme.of(context)
-                                      .labelSmall
-                                      .override(
-                                        fontFamily: 'Poppins',
-                                        color: FlutterFlowTheme.of(context)
-                                            .accent2,
-                                        fontSize: 10.0,
-                                        letterSpacing: 0.0,
-                                        lineHeight: 1.5,
-                                      ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
                     ),
                   ],
                 ),
@@ -433,22 +376,40 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                         hoverColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         onTap: () async {
-                          context.goNamed(
-                            'goals',
-                            extra: <String, dynamic>{
-                              kTransitionInfoKey: TransitionInfo(
-                                hasTransition: true,
-                                transitionType: PageTransitionType.rightToLeft,
-                                duration: Duration(milliseconds: 400),
-                              ),
-                            },
+                          GoRouter.of(context).prepareAuthEvent();
+
+                          final user = await authManager.createAccountWithEmail(
+                            context,
+                            _model.emailTextController.text,
+                            _model.passwordTextController.text,
                           );
+                          if (user == null) {
+                            return;
+                          }
+
+                          await UsuarioRecord.collection
+                              .doc(user.uid)
+                              .update(createUsuarioRecordData(
+                                nombre: _model.nombreTextController.text,
+                                apellido: _model.apellidoTextController.text,
+                                contrasenna: _model.passwordTextController.text,
+                                displayName: _model.nombreTextController.text,
+                                email: _model.emailTextController.text,
+                                createdTime: getCurrentTimestamp,
+                              ));
+
+                          await authManager.sendEmailVerification();
+
+                          context.goNamedAuth('home', context.mounted);
+                        },
+                        onDoubleTap: () async {
+                          context.pushNamed('registrationSuccess');
                         },
                         child: wrapWithModel(
                           model: _model.primaryButtonModel,
                           updateCallback: () => safeSetState(() {}),
                           child: PrimaryButtonWidget(
-                            buttonText: 'Register',
+                            buttonText: 'Registrarse',
                           ),
                         ),
                       ),
@@ -499,49 +460,40 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   8.0, 0.0, 8.0, 0.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(26.0),
-                                  border: Border.all(
-                                    color: FlutterFlowTheme.of(context).accent2,
-                                    width: 0.8,
-                                  ),
-                                ),
-                                alignment: AlignmentDirectional(0.0, 0.0),
-                                child: Align(
-                                  alignment: AlignmentDirectional(0.0, 0.0),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(26.0),
-                                    child: Image.asset(
-                                      'assets/images/googleIcon.png',
-                                      width: 24.0,
-                                      fit: BoxFit.cover,
+                              child: InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  GoRouter.of(context).prepareAuthEvent();
+                                  final user = await authManager
+                                      .signInWithGoogle(context);
+                                  if (user == null) {
+                                    return;
+                                  }
+
+                                  context.goNamedAuth('home', context.mounted);
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(26.0),
+                                    border: Border.all(
+                                      color:
+                                          FlutterFlowTheme.of(context).accent2,
+                                      width: 0.8,
                                     ),
                                   ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  8.0, 0.0, 8.0, 0.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(26.0),
-                                  border: Border.all(
-                                    color: FlutterFlowTheme.of(context).accent2,
-                                    width: 0.8,
-                                  ),
-                                ),
-                                alignment: AlignmentDirectional(0.0, 0.0),
-                                child: Align(
                                   alignment: AlignmentDirectional(0.0, 0.0),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        32.0, 26.0, 32.0, 26.0),
-                                    child: Image.asset(
-                                      'assets/images/facebookIcon.png',
-                                      height: 24.0,
-                                      fit: BoxFit.cover,
+                                  child: Align(
+                                    alignment: AlignmentDirectional(0.0, 0.0),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(26.0),
+                                      child: Image.asset(
+                                        'assets/images/googleIcon.png',
+                                        width: 24.0,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -560,7 +512,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Already have an account?',
+                        '¿Ya tines una cuenta?',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Poppins',
                               letterSpacing: 0.0,

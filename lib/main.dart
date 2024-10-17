@@ -20,6 +20,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   GoRouter.optionURLReflectsImperativeAPIs = true;
   usePathUrlStrategy();
+
   await initFirebase();
 
   runApp(MyApp());
@@ -128,8 +129,8 @@ class _NavBarPageState extends State<NavBarPage> {
   Widget build(BuildContext context) {
     final tabs = {
       'home': HomeWidget(),
-      'progressTracker': ProgressTrackerWidget(),
-      'profile': ProfileWidget(),
+      'agendar': AgendarWidget(),
+      'perfilUsuario': PerfilUsuarioWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -144,7 +145,7 @@ class _NavBarPageState extends State<NavBarPage> {
         backgroundColor: Colors.white,
         selectedItemColor: FlutterFlowTheme.of(context).primary,
         unselectedItemColor: Color(0x8A000000),
-        showSelectedLabels: false,
+        showSelectedLabels: true,
         showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,
         items: <BottomNavigationBarItem>[
@@ -162,11 +163,11 @@ class _NavBarPageState extends State<NavBarPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.camera_alt_outlined,
+              Icons.fitness_center,
               size: 32.0,
             ),
             activeIcon: Icon(
-              Icons.camera_alt_rounded,
+              Icons.fitness_center_rounded,
               size: 32.0,
             ),
             label: 'Progress',
